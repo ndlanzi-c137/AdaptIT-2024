@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="globals.css" />
+    <link rel="stylesheet" href="css/login.css" />
+    <title>Log In</title>
+  </head>
+  <body>
+    <div class="login">
+      <div class="div">
+        <div class="overlap">
+          <!-- <img class="option" src="images/Dlogo.png" /> -->
+          <p class="signin">
+            <span class="text-wrapper">Sign</span> <span class="span">In</span>
+          </p>
+        </div>
+
+        <!-- Error Message -->
+        <p class="error-message" id="error-message"></p>
+
+        <div class="form-group">
+          <!-- Form for Login -->
+          <form onsubmit="handleLogin(event)">
+            <!-- Email Input -->
+            <div class="input-wrapper">
+              <input
+                type="email"
+                name="email"
+                placeholder="Email"
+                class="input-field"
+                required
+              />
+              <img class="icon" src="images/gmail-logo.svg" />
+            </div>
+            <!-- Password Input -->
+            <div class="input-wrapper">
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                class="input-field"
+                required
+              />
+              <img class="icon" src="images/lock.svg" />
+            </div>
+            <!-- Sign In Button -->
+            <button type="submit" class="btn-sign-in">Sign In</button>
+          </form>
+        </div>
+
+        <div class="google-wrapper">
+          <!-- Google Sign In -->
+          <a href="/auth/google">
+            <img class="google" src="images/google-1.svg" />
+          </a>
+        </div>
+
+        <p class="don-t-have-an">
+          Don’t have an account?
+          <a href="signup.html" class="signup-link">Signup</a>
+        </p>
+      </div>
+    </div>
+
+    <script>
+      async function handleLogin(event) {
+        event.preventDefault();
+
+        const formData = new FormData(event.target);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch("/login", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            throw new Error(result.msg);
+          }
+
+          alert(result.msg);
+          window.location.href = "/userDashboard";
+        } catch (error) {
+          document.getElementById("error-message").textContent = error.message;
+        }
+      }
+    </script>
+  </body>
+</html>

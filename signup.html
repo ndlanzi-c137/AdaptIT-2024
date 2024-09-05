@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="globals.css" />
+        <link rel="stylesheet" href="css/signup.css" />
+        <title>Sign Up</title>
+    </head>
+    <body>
+        <div class="signup">
+            <div class="div">
+                <div class="overlap">
+                    <!-- <img class="option" src="images/Dlogo.png" /> -->
+                    <p class="p"><span class="text-wrapper">Sign</span> <span class="span">Up</span></p>
+                </div>
+                
+                <!-- Error Message -->
+                <p class="error-message" id="error-message"></p>
+
+                <div class="form-group">
+                    <!-- Form for Signup -->
+                    <form onsubmit="handleSignup(event)">
+                        <!-- Username Input -->
+                        <div class="input-wrapper">
+                            <input type="text" name="username" placeholder="Username" class="input-field" required>
+                            <img class="icon" src="images/user.svg" />
+                        </div>
+                        <!-- Email Input -->
+                        <div class="input-wrapper">
+                            <input type="email" name="email" placeholder="Email" class="input-field" required>
+                            <img class="icon" src="images/gmail-logo.svg" />
+                        </div>
+                        <!-- Password Input -->
+                        <div class="input-wrapper">
+                            <input type="password" name="password" id="password" placeholder="Password" class="input-field" required>
+                            <img class="icon" src="images/lock.svg" />
+                        </div>
+                        <!-- Confirm Password Input -->
+                        <div class="input-wrapper">
+                            <input type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm password" class="input-field" required>
+                            <img class="icon" src="images/lock.svg" />
+                        </div>
+                        <!-- Create Account Button -->
+                        <button type="submit" class="btn-create-account">Create account</button>
+                    </form>
+                </div>
+
+                <div class="google-wrapper">
+                    <!-- Google Sign In -->
+                    <a href="/auth/google">
+                        <img class="google" src="images/google-1.svg" />
+                    </a>
+                </div>
+                
+                <!-- Signin Link -->
+                <p class="already-have-an">
+                    <span class="text-wrapper-8">Already have an account?</span> 
+                    <a href="login.html" class="signin-link">Sign In</a>
+                </p>
+            </div>
+        </div>
+
+        <script>
+            async function handleSignup(event) {
+                event.preventDefault();
+
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirmPassword').value;
+
+                if (password !== confirmPassword) {
+                    document.getElementById('error-message').textContent = "Passwords do not match.";
+                    return;
+                }
+
+                const formData = new FormData(event.target);
+                const data = Object.fromEntries(formData.entries());
+
+                try {
+                    const response = await fetch('/signup', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+
+                    const result = await response.json();
+
+                    if (!response.ok) {
+                        throw new Error(result.msg);
+                    }
+
+                    alert(result.msg);
+                    window.location.href = '/login';
+                } catch (error) {
+                    document.getElementById('error-message').textContent = error.message;
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -1,0 +1,199 @@
+/* Overall login container */
+.login {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Key */
+}
+
+/* Inner div container */
+.login .div {
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 90%; /* Responsive width */
+    max-width: 360px;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Top section (Logo & Title) */
+.login .overlap {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Logo */
+.login .option {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.login .signin {
+    font-family: "Irish Grover-Regular", Helvetica;
+    font-weight: 400;
+    color: 1d43a5;
+    font-size: 40px;
+    letter-spacing: 0.94px;
+    line-height: normal;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.login .text-wrapper {
+    color: 1d43a5;
+    letter-spacing: 0.94px;
+}
+
+.login .span {
+    color: #1d43a5;
+    letter-spacing: 0.94px;
+}
+
+/* Error Message */
+.login .error-message {
+    color: red; /* Change this to any color you prefer */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Wrapper for input fields and button */
+.login .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Input Fields */
+.login .input-wrapper {
+    position: relative;
+    width: 90%; /* Responsive width */
+    max-width: 298px;
+    margin: 10px auto;
+    background-color: #d9d9d9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.login .input-field {
+    width: 100%;
+    padding: 10px 50px;
+    border: none;
+    border-radius: 12px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    color: #000000;
+    background-color: transparent;
+}
+
+.login .icon {
+    position: absolute;
+    left: 10px;
+    width: 36px;
+    height: 36px;
+}
+
+/* Sign In Button */
+.login .btn-sign-in {
+    width: 90%; /* Responsive width */
+    max-width: 298px;
+    height: 45px;
+    margin: 10px auto;
+    background-color: #1d44a5d4;
+    border-radius: 12px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 22px;
+    color: #000000;
+    letter-spacing: 0.52px;
+    border: none;    
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+}
+
+/* Key */
+.login .btn-sign-in:hover{
+    background-color: #0935a3;
+}
+
+/* Google Sign-In */
+.login .google-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.login .google {
+    width: 36px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Key */
+}
+
+.login .google:hover{
+    transform: scale(1.1);
+}
+
+/* Signup Link */
+.login .don-t-have-an {
+    text-align: center;
+    margin-top: 15px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    color: 1d43a5;
+}
+
+.login .signup-link {
+    color: #1d44a5d4;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Key */
+}
+
+.login .signup-link:hover{
+    color: #0935a3; /* Key */
+}
+
+/* Media query for small screens */
+@media (max-width: 600px) {
+    .login .div {
+        width: 100%; /* Ensure full width on very small screens */
+    }
+}
+
+@media (max-height: 600px) {
+    .login .div {
+        transform: scale(0.9); /* Scale down form slightly */
+        transform-origin: top center; /* Ensure scaling happens from the top */
+    }
+
+    .login .signin {
+        font-size: 35px; /* Further reduce font size on very short screens */
+    }
+
+    .login .input-field {
+        font-size: 18px; /* Further reduce font size on very short screens */
+    }
+
+    .login .btn-sign-in {
+        height: 40px; /* Further reduce height on very short screens */
+        font-size: 20px; /* Further reduce font size on very short screens */
+    }
+}

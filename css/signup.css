@@ -1,0 +1,194 @@
+.signup {
+    background-color: #ffffff;
+    display: flex;
+    /*flex-direction: row;*/
+    justify-content: center;
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    box-sizing: border-box;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Key */
+}
+
+.signup .div {
+    background-color: #ffffff;
+    overflow: hidden;
+    width: 90%; /* Responsive width */
+    max-width: 320px;
+    height: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 15px;
+    /*box-sizing: border-box;*/
+}
+
+.signup .overlap {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.signup .option {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+}
+
+.signup .p {
+    font-family: "Irish Grover-Regular", Helvetica;
+    font-weight: 400;
+    color: #1d43a5;
+    font-size: 45px;
+    letter-spacing: 0.94px;
+    line-height: normal;
+}
+
+.signup .text-wrapper {
+    color: #000000;
+    letter-spacing: 0.94px;
+}
+
+.signup .span {
+    color: #1d43a5;
+    letter-spacing: 0.94px;
+}
+
+/* Error Message */
+.signup .error-message {
+    color: red; /* Change this to any color you prefer */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 16px;
+    text-align: center;
+}
+
+/* Wrapper for input fields and button */
+.signup .form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Input Fields */
+.signup .input-wrapper {
+    position: relative;
+    width: 90%;
+    max-width: 298px;
+    margin: 10px auto;
+    background-color: #d9d9d9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.signup .input-field {
+    width: 100%;
+    padding: 10px 50px;
+    border: none;
+    border-radius: 12px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 20px;
+    color: #000000;
+    background-color: transparent;
+}
+
+.signup .icon {
+    position: absolute;
+    left: 10px;
+    width: 36px;
+    height: 36px;
+}
+
+/* Create Account Button */
+.signup .btn-create-account {
+    width: 90%;
+    max-width: 298px;
+    height: 45px;
+    margin: 10px auto;
+    background-color: #1d44a5d4;
+    border-radius: 12px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #000000;
+    letter-spacing: 0.52px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Key */
+}
+
+.signup .btn-create-account:hover{
+    background-color: #1d43a5;
+}
+
+/* Google Sign-In */
+.signup .google-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.signup .google {
+    width: 36px;
+    height: 34px;
+    cursor: pointer;
+    transition: transform 0.3s ease; /* Key */
+}
+
+.signup .google:hover{
+    transform: scale(1.1);
+}
+
+
+/* Signin Link */
+.signup .already-have-an {
+    text-align: center;
+    margin-top: 10px;
+    font-family: "Inter-Regular", Helvetica;
+    font-size: 15px;
+    color: #000000;
+}
+
+.signup .signin-link {
+    color: #1d44a5d4;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease; /* Key */
+}
+
+.signup .signin-link:hover{
+    color: #1d43a5; /* Key */
+}
+
+/* Media query for small screens */
+@media (max-width: 600px) {
+    .signup .div {
+        width: 100%; /* Ensure full width on very small screens */
+    }
+}
+
+/* Media query for small screens */
+@media (max-height: 600px) {
+    .signup .div {
+        transform: scale(0.9); /* Scale down form slightly */
+        transform-origin: top center; /* Ensure scaling happens from the top */
+    }
+
+    .signup .p {
+        font-size: 35px; /* Further reduce font size on very short screens */
+    }
+
+    .signup .input-field {
+        font-size: 18px; /* Further reduce font size on very short screens */
+    }
+
+    .signup .btn-create-account {
+        height: 40px; /* Further reduce height on very short screens */
+        font-size: 20px; /* Further reduce font size on very short screens */
+    }
+}
