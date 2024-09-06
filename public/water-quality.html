@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Quality Checker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 600px;
+        }
+        h1 {
+            color: #1814F3;
+            text-align: center;
+        }
+        label, select, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        select, button {
+            padding: 10px;
+            border: 1px solid #718EBF;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1814F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #16DBCC;
+        }
+        #result, #recipes {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #718EBF;
+            border-radius: 5px;
+            color: white;
+        }
+        #recipes {
+            display: none;
+        }
+        #recipes ul {
+            padding-left: 20px;
+        }
+        #recipes li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Quality Checker</h1>
+        
+        <label for="area">Select Area:</label>
+        <select id="area">
+            <option value="Johannesburg">Johannesburg</option>
+            <option value="Kimberley">Kimberley</option>
+            <option value="Polokwane">Polokwane</option>
+            <option value="Pretoria">Pretoria</option>
+            <option value="Cape Town">Cape Town</option>
+            <option value="Bloemfontein">Bloemfontein</option>
+            <option value="East London">East London</option>
+            <option value="George">George</option>
+            <option value="Rustenburg">Rustenburg</option>
+        </select>
+
+        <button onclick="makePrediction()">Check Quality</button>
+
+        <div id="result"></div>
+        <div id="recipes">
+            <h3>Home Water Purification Recipes</h3>
+            <ul>
+                <li><strong>Boiling:</strong> Boil water for at least 1-3 minutes to kill bacteria, viruses, and parasites.</li>
+                <li><strong>Bleach Disinfection:</strong> Add 2 drops of unscented household bleach to 1 liter of water. Let it sit for 30 minutes.</li>
+                <li><strong>UV Purification:</strong> Expose water to direct sunlight for 6 hours using a clear plastic bottle to kill bacteria and viruses.</li>
+                <li><strong>Filtration:</strong> Use a home water filter to remove contaminants like heavy metals, chlorine, and bacteria.</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function makePrediction() {
+            const area = document.getElementById('area').value;
+            const resultElement = document.getElementById('result');
+            const recipesElement = document.getElementById('recipes');
+
+            // Simulating a fetch request since we don't have a backend
+            setTimeout(() => {
+                const randomPrediction = Math.random() < 0.5 ? 0 : 1;
+                
+                if (randomPrediction === 1) {
+                    resultElement.innerHTML = `<p>Water quality for ${area}: Safe for human consumption.</p>`;
+                    recipesElement.style.display = 'none';
+                } else {
+                    resultElement.innerHTML = `<p>Water quality for ${area}: Not safe for human consumption.</p>`;
+                    recipesElement.style.display = 'block';
+                }
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
