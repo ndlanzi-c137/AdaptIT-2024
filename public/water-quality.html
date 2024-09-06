@@ -64,6 +64,20 @@
         #recipes li {
             margin-bottom: 10px;
         }
+        #back-button {
+            background-color: #1814F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 20%;
+            transition: background-color 0.3s ease;
+        }
+        #back-button:hover {
+            background-color: #16DBCC;
+        }
     </style>
 </head>
 <body>
@@ -83,25 +97,109 @@
             <option value="Rustenburg">Rustenburg</option>
         </select>
 
+        <label for="language">Select Language:</label>
+        <select id="language">
+            <option value="English">English</option>
+            <option value="Afrikaans">Afrikaans</option>
+            <option value="Zulu">Zulu (isiZulu)</option>
+            <option value="Xhosa">Xhosa (isiXhosa)</option>
+            <option value="Southern Sotho">Southern Sotho (Sesotho)</option>
+            <option value="Northern Sotho">Northern Sotho (Sepedi)</option>
+            <option value="Tswana">Tswana (Setswana)</option>
+            <option value="Tsonga">Tsonga (Xitsonga)</option>
+            <option value="Venda">Venda (Tshivenda)</option>
+            <option value="Swati">Swati (siSwati)</option>
+            <option value="Ndebele">Ndebele (isiNdebele)</option>
+        </select>
+
         <button onclick="makePrediction()">Check Quality</button>
 
         <div id="result"></div>
         <div id="recipes">
             <h3>Home Water Purification Recipes</h3>
-            <ul>
-                <li><strong>Boiling:</strong> Boil water for at least 1-3 minutes to kill bacteria, viruses, and parasites.</li>
-                <li><strong>Bleach Disinfection:</strong> Add 2 drops of unscented household bleach to 1 liter of water. Let it sit for 30 minutes.</li>
-                <li><strong>UV Purification:</strong> Expose water to direct sunlight for 6 hours using a clear plastic bottle to kill bacteria and viruses.</li>
-                <li><strong>Filtration:</strong> Use a home water filter to remove contaminants like heavy metals, chlorine, and bacteria.</li>
-            </ul>
+            <ul id="recipes-list"></ul>
         </div>
+        <button id="back-button" onclick="goToDashboard()"> Back </button>
     </div>
 
     <script>
+        const purificationRecipes = {
+            
+            "English": [
+                "<strong>Boiling:</strong> Boil water for at least 1-3 minutes to kill bacteria, viruses, and parasites.",
+                "<strong>Bleach Disinfection:</strong> Add 2 drops of unscented household bleach to 1 liter of water. Let it sit for 30 minutes.",
+                "<strong>UV Purification:</strong> Expose water to direct sunlight for 6 hours using a clear plastic bottle to kill bacteria and viruses.",
+                "<strong>Filtration:</strong> Use a home water filter to remove contaminants like heavy metals, chlorine, and bacteria."
+            ],
+            "Afrikaans": [
+                "<strong>Kook:</strong> Kook water vir minstens 1-3 minute om bakterieë, virusse en parasiete dood te maak.",
+                "<strong>Bleikmiddel Ontsmetting:</strong> Voeg 2 druppels ongegeurde huishoudelike bleikmiddel by 1 liter water. Laat dit vir 30 minute staan.",
+                "<strong>UV Suiwering:</strong> Stel water bloot aan direkte sonlig vir 6 uur met behulp van 'n helder plastiekbottel om bakterieë en virusse dood te maak.",
+                "<strong>Filtrering:</strong> Gebruik 'n tuiswaterfilter om kontaminante soos swaarmetale, chloor en bakterieë te verwyder."
+            ],
+            "Zulu": [
+                "<strong>Ukubilisa:</strong> Bilisa amanzi okungenani imizuzu engu-1 kuya kwengu-3 ukubulala amagciwane, amabhaktheriya, nezilokazane.",
+                "<strong>Ukubulala Ngebhilitshi:</strong> Faka amaconsi amabili ebhilitshi elingancwebanga elingavumi amagciwane ku-litha elilodwa lamanzi. Yekela amanzi eme imizuzu engu-30.",
+                "<strong>Ukuhlanzwa kwe-UV:</strong> Beka amanzi elangeni amahora angu-6 usebenzisa ibhodlela lepulasitiki elihlanzekile ukubulala amagciwane namabhaktheriya.",
+                "<strong>Ukucwenga:</strong> Sebenzisa isihlungi samanzi sasekhaya ukususa ukungcola okufana nezinsimbi ezisindayo, i-chlorine namabhaktheriya."
+            ],
+            "Xhosa": [
+                "<strong>Ukubilisa:</strong> Bilisa amanzi okungenani imizuzu eli-1 ukuya kwemi-3 ukubulala iintsholongwane, iintsholongwane, kunye neentshulube.",
+                "<strong>Ukuhlanjwa ngeBleach:</strong> Yongeza amaconsi amabini ebleach engekho neviniga kulitha enye yamanzi. Mawahlale imizuzu engama-30.",
+                "<strong>Ukucoceka kweUV:</strong> Veza amanzi elangeni elithe ngqo iiyure ezi-6 usebenzisa ibhotile yeclear plastic ukubulala iintsholongwane kunye neebhaktheriya.",
+                "<strong>Isihluzi:</strong> Sebenzisa isihluzo samanzi sasekhaya ukuze ususe ungcoliseko olufana nezinyithi ezinzima, i-chlorine, kunye neebhaktheriya."
+            ],
+            "Southern Sotho": [
+                "<strong>Ho belisa:</strong> Belisa metsi bonyane motsotso o le momg ho isa ho e meraro (1-3) ho bolaya dikokwane, dibaerase le diboko.",
+                "<strong>Ho Hloekisa ka Bleach:</strong> Tshela marothodi a 2 a bleach e se nang monko ka hara litara le lenngwe  ya metsi. E tlohele metsotso e mashome a mararo(30).",
+                "<strong>Ho hloekisa ka UV:</strong> Beha metsi mahleng a letsatsi ka dihora tse 6 o sebedisa botlolo ya polasetiki ho bolaya dikokwane le dibaerase.",
+                "<strong>Ho sefa:</strong> Sebedisa sefahla sa metsi malapeng ho tlosa ditsila tse kang dimetale tse boima, chlorine le dikokwane."
+            ],
+            "Northern Sotho": [
+                "<strong>Go bediša:</strong> Bediša meetse metsotso ye 1-3 go bolaya dikokwane, dibaerase le diboko.",
+                "<strong>Go sefa ka Bleach:</strong> Fa meetse marothodi a mabedi a bleach e sego ya monko go 1 litre ya meetse. A tlogele metsotso ye 30.",
+                "<strong>Go hloekisa ka UV:</strong> Beha meetse letšatšing go tšea diiri tše 6 o šomiša lebotlelo la polasetiki le le hlwekilego go bolaya dikokwane le dibaerase.",
+                "<strong>Go sefa:</strong> Šomiša sefahla sa meetse sa ka gae go tloša ditšhila tša go swana le tše dikgolo, chlorine le dikokwane."
+            ],
+            "Tswana": [
+                "<strong>Go belesa:</strong> Belesa metsi metsotso e le 1-3 go bolaya dikokwane, baerase le diphatsa.",
+                "<strong>Go sefa ka Bleach:</strong> Eketse marothodi a mabedi a bleach e e se nang monkgo go 1 lita ya metsi. A tlogele metsotso e 30.",
+                "<strong>Go tlhatswa ka UV:</strong> Bontsha metsi letsatsing ka diura tse 6 o dirisa botlolo ya polasetiki go bolaya dikokwane le baerase.",
+                "<strong>Go sefa:</strong> Dirisa sefe sa metsi sa kwa gae go tlosa dikhutlo jaaka dimetale tse di masisi, chlorine le dikokwane."
+            ],
+            "Tsonga": [
+                "<strong>Kubilisa:</strong> Bila mati kwalomu ka 1-3 wa timinete leswaku u dlaya switsongwatsongwana, mavabyi na tiharhu.",
+                "<strong>Ku tirhisa mabyalobyala:</strong> Engetela matsisi mambirhi ya mabyalobyala lama nga na nantswo eka 1 litre ya mati. Tshika swi tshama kwalomu ka 30 wa timinete.",
+                "<strong>Ku hlohlotela ka dyambu:</strong> Tshika mati yi languteka kahle ehansi ka dyambu ra nkarhi wa 6 wa tiawara hi ku tirhisa xibedlhela xa plastiki xo basa ku dlaya mavabyi na switsongwatsongwana.",
+                "<strong>Kuhlambha:</strong> Tirhisa xihlambelo xa mati xa le kaya ku susa swipfalo swo tanihi tinsimbhi to tika, chlorine na switsongwatsongwana."
+            ],
+            "Venda": [
+                "<strong>U bvumela:</strong> Bvumela madi lwa miniti 1-3 u itela u vhulaha zwikokovhi, zwipuka, na zwikhokhonono.",
+                "<strong>U bvisa zwikokovhi nga bleach:</strong> Atha malagasi mavhili a bleach a sa na munukhelelo kha litre nthihi ya madi. Litsha u sedza lwa miniti dza 30.",
+                "<strong>U tshena nga UV:</strong> Vhea madi khagonyoni lwa awara dza 6 u shumisa bidela ya plastiki yo kunakisa u vhulaha zwikokovhi na zwipuka.",
+                "<strong>U sefa:</strong> Shumisa musefa wa madini wa hayani u bvisa zwine zwa sokou fhambana sa u tou nga zwipfume, chlorine na zwikokovhi."
+            ],
+            "Swati": [
+                "<strong>Kubila:</strong> Bilisa emanti imizuzu leli-1 kuya leli-3 kubulala libhaktheriya, emagciwane, nemagciwane.",
+                "<strong>Kubulala nge-Bleach:</strong> Faka emaconsi lamabili ebleach lengephunga ku-1 litre yemanti. Awashiye imizuzu lengu-30.",
+                "<strong>Kuhlambulula nge-UV:</strong> Bonisa emanti elangeni lishone i-6 emahora usebentisa libhodlela lelicwengekile leliplastiki kubulala libhaktheriya nemagciwane.",
+                "<strong>Kusefa:</strong> Sebentisa isefa yemanti yasekhaya kususa tintfo letingcole njenge ematje lasindzako, i-chlorine nalibhaktheriya."
+            ],
+            "Ndebele": [
+                "<strong>Ukubilisa:</strong> Bilisa amanzi isikhatshana esingaba ngamaminithi angu-1 kuye kwayi-3 ukubulala amagciwane, amabhaktheriya kanye lezinyandezulu.",
+                "<strong>Ukwelapha ngeBleach:</strong> Faka amathonsi amabili e-bleach engenaphunga ku-1 litre yamanzi. Mawahlale imizuzu engu-30.",
+                "<strong>Ukwelapha nge-UV:</strong> Bonisa amanzi elangeni amahora angu-6 usebenzisa ibhodlela lepulasitiki elicacile ukubulala amagciwane lamabhaktheriya.",
+                "<strong>Ukusefa:</strong> Sebenzisa isefa yamanzi yasekhaya ukususa ukungcola okufana lezinsimbi ezisindayo, i-chlorine lamagciwane."
+            ]
+    
+        };
+
         function makePrediction() {
             const area = document.getElementById('area').value;
+            const language = document.getElementById('language').value;
             const resultElement = document.getElementById('result');
             const recipesElement = document.getElementById('recipes');
+            const recipesList = document.getElementById('recipes-list');
 
             // Simulating a fetch request since we don't have a backend
             setTimeout(() => {
@@ -113,8 +211,22 @@
                 } else {
                     resultElement.innerHTML = `<p>Water quality for ${area}: Not safe for human consumption.</p>`;
                     recipesElement.style.display = 'block';
+
+                    // Display purification recipes in the selected language
+                    const recipes = purificationRecipes[language] || purificationRecipes["English"];
+                    recipesList.innerHTML = ''; // Clear previous recipes
+
+                    recipes.forEach(recipe => {
+                        const li = document.createElement('li');
+                        li.innerHTML = recipe;
+                        recipesList.appendChild(li);
+                    });
                 }
             }, 1000);
+        }
+
+        function goToDashboard() {
+            window.location.href = 'dashboard.html'; // Redirect to your dashboard
         }
     </script>
 </body>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Usage and Interruption Schedule</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+        }
+        h1, h2 {
+            color: #1814F3;
+            text-align: center;
+        }
+        label, select, button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        select, button {
+            padding: 10px;
+            border: 1px solid #718EBF;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #1814F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #16DBCC;
+        }
+        #scheduleInfo, #leakageInfo {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #718ebf62;
+            border-radius: 5px;
+            color: rgb(0, 0, 0);
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #718EBF;
+        }
+        #back-button {
+            background-color: #1814F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            width: 20%;
+            transition: background-color 0.3s ease;
+        }
+        #back-button:hover {
+            background-color: #16DBCC;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Water Usage and Interruption Schedule</h1>
+        
+        <label for="city">Select City:</label>
+        <select id="city">
+            <option value="">Choose a city</option>
+            <option value="Johannesburg">Johannesburg</option>
+            <option value="Cape Town">Cape Town</option>
+            <option value="Durban">Durban</option>
+            <option value="Pretoria">Pretoria</option>
+            <option value="Port Elizabeth">Port Elizabeth</option>
+        </select>
+
+        <button onclick="getWaterInfo()">Get Water Information</button>
+
+        <div id="scheduleInfo"></div>
+        <div id="leakageInfo"></div>
+
+        <button id="back-button" onclick="goToDashboard()"> Back </button>
+    </div>
+
+    <script>
+        function getWaterInfo() {
+            const city = document.getElementById('city').value;
+            if (!city) {
+                alert('Please select a city');
+                return;
+            }
+
+            // Simulated data - in a real application, this would come from a server
+            const scheduleData = {
+                'Johannesburg': [
+                    { day: 'Monday', time: '06:00 - 10:00' },
+                    { day: 'Thursday', time: '18:00 - 22:00' }
+                ],
+                'Cape Town': [
+                    { day: 'Tuesday', time: '08:00 - 12:00' },
+                    { day: 'Friday', time: '20:00 - 24:00' }
+                ],
+                'Durban': [
+                    { day: 'Wednesday', time: '07:00 - 11:00' },
+                    { day: 'Saturday', time: '19:00 - 23:00' }
+                ],
+                'Pretoria': [
+                    { day: 'Monday', time: '09:00 - 13:00' },
+                    { day: 'Thursday', time: '21:00 - 01:00' }
+                ],
+                'Port Elizabeth': [
+                    { day: 'Tuesday', time: '10:00 - 14:00' },
+                    { day: 'Friday', time: '22:00 - 02:00' }
+                ]
+            };
+
+            const leakageData = {
+                'Johannesburg': { area: 'Sandton', etaRepair: '2023-09-10 14:00' },
+                'Cape Town': { area: 'Table View', etaRepair: '2023-09-11 16:00' },
+                'Durban': { area: 'Umhlanga', etaRepair: '2023-09-12 10:00' },
+                'Pretoria': { area: 'Centurion', etaRepair: '2023-09-13 12:00' },
+                'Port Elizabeth': { area: 'Summerstrand', etaRepair: '2023-09-14 15:00' }
+            };
+
+            // Display schedule information
+            let scheduleHtml = `<h2>Water Interruption Schedule for ${city}</h2>`;
+            scheduleHtml += '<table><tr><th>Day</th><th>Time</th></tr>';
+            scheduleData[city].forEach(schedule => {
+                scheduleHtml += `<tr><td>${schedule.day}</td><td>${schedule.time}</td></tr>`;
+            });
+            scheduleHtml += '</table>';
+            document.getElementById('scheduleInfo').innerHTML = scheduleHtml;
+
+            // Display leakage information
+            const leakage = leakageData[city];
+            let leakageHtml = `<h2>Current Leakage Information for ${city}</h2>`;
+            leakageHtml += `<p>Affected Area: ${leakage.area}</p>`;
+            leakageHtml += `<p>Expected Repair Completion: ${leakage.etaRepair}</p>`;
+            document.getElementById('leakageInfo').innerHTML = leakageHtml;
+        }
+
+        function goToDashboard() {
+            window.location.href = 'dashboard.html'; // Redirect to your dashboard
+        }
+    </script>
+</body>
+</html>
+
